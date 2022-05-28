@@ -1,0 +1,65 @@
+{
+  "name": "avehlies/phodam-example",
+  "description": "A Phodam example",
+  "type": "application",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "keywords": [
+    "unit tests",
+    "testing",
+    "data objects"
+  ],
+  "homepage": "https://github.com/avehlies/phodam-example",
+  "readme": "README.md",
+  "authors": [
+    {
+      "name": "Andrew Vehlies",
+      "email": "avehlies@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "platform": {
+      "php": "7.4"
+    }
+  },
+  "require-dev": {
+    "avehlies/phodam": "~0",
+    "phpstan/phpstan": "~1.4",
+    "phpunit/phpunit": "~9.5",
+    "squizlabs/php_codesniffer": "~3.6",
+    "friendsofphp/php-cs-fixer": "~3.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhodamExample\\": "src/PhodamExample"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PhodamExample\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "lint:phpcs": "phpcs --standard=PSR12 src",
+    "lint:phpcsfixer": "php-cs-fixer fix src --rules=@PSR12 --dry-run --cache-file=build/.php-cs-fixer.cache",
+    "lint:phpcsfixer:fix": "php-cs-fixer fix src --rules=@PSR12 --cache-file=build/.php-cs-fixer.cache",
+    "lint:phpstan": "phpstan analyse -l 6 src",
+    "test:phpunit": "phpunit",
+    "test:coverage": "XDEBUG_MODE=coverage phpunit --coverage-html=build/phpunit",
+    "lint": [
+      "mkdir -p build",
+      "@lint:phpstan",
+      "@lint:phpcs",
+      "@lint:phpcsfixer"
+    ],
+    "test": [
+      "mkdir -p build",
+      "@test:phpunit"
+    ],
+    "precommit": [
+      "@lint",
+      "@test"
+    ]
+  }
+}
