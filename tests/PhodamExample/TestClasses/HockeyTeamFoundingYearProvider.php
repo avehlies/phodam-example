@@ -6,12 +6,11 @@ namespace PhodamExampleTests\TestClasses;
 
 use Phodam\Provider\TypeProviderInterface;
 
-class SportsTeamYearTypeProvider implements TypeProviderInterface
+class HockeyTeamFoundingYearProvider implements TypeProviderInterface
 {
     public function create(array $overrides = [])
     {
-        $currentYear = (int) date('Y');
-        return rand(1920, $currentYear);
+        return rand(1920, (int) date('Y'));
     }
 
 }

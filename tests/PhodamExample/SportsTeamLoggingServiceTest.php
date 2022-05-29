@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace PhodamExampleTests;
 
-use Phodam\Provider\TypeProviderConfig;
 use PhodamExample\SportsTeam;
 use PhodamExample\SportsTeamLoggingService;
-use PhodamExampleTests\TestClasses\HockeyTeamProvider;
-use PhodamExampleTests\TestClasses\SportsTeamYearTypeProvider;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -19,35 +16,22 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
     private LoggerInterface $logger;
     private SportsTeamLoggingService $service;
 
+    private int $thisYear;
+
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->thisYear = (int) date('Y');
+
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->service = new SportsTeamLoggingService($this->logger);
-
-
-        $sportsTeamYearProvider = new SportsTeamYearTypeProvider();
-        $sportsTeamYearProviderConfig =
-            (new TypeProviderConfig($sportsTeamYearProvider))
-                ->forInt()
-                ->withName('FoundingYear');
-
-        $this->phodam->registerTypeProviderConfig($sportsTeamYearProviderConfig);
-
-        $hockeyTeamProvider = new HockeyTeamProvider();
-        $hockeyTeamProviderConfig =
-            (new TypeProviderConfig($hockeyTeamProvider))
-                ->forClass(SportsTeam::class)
-                ->withName('Hockey');
-
-        $this->phodam->registerTypeProviderConfig($hockeyTeamProviderConfig);
     }
 
     /**
      * @covers ::logLocation
      */
-    public function testLogLocation(): void
+    public function testLogLocationForHockeyTeam(): void
     {
         $team = $this->phodam->create(SportsTeam::class, 'Hockey');
 
@@ -61,7 +45,7 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
     /**
      * @covers ::logName
      */
-    public function testLogName(): void
+    public function testLogNameForHockeyTeam(): void
     {
         $team = $this->phodam->create(SportsTeam::class, 'Hockey');
 
@@ -77,7 +61,7 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
      */
     public function testLogLeague(): void
     {
-        $team = $this->phodam->create(SportsTeam::class, 'Hockey');
+        $team = $this->phodam->create(SportsTeam::class);
 
         $this->logger->expects($this->once())
             ->method('info')
@@ -87,9 +71,23 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
     }
 
     /**
+     * @covers ::logLeague
+     */
+    public function testLogLeagueForHockeyTeam(): void
+    {
+        $team = $this->phodam->create(SportsTeam::class, 'Hockey');
+
+        $this->logger->expects($this->once())
+            ->method('info')
+            ->with('League: NHL');
+
+        $this->service->logLeague($team);
+    }
+
+    /**
      * @covers ::logFounded
      */
-    public function testLogFounded(): void
+    public function testLogFoundedForHockeyTeam(): void
     {
         $team = $this->phodam->create(SportsTeam::class, 'Hockey');
 
@@ -112,6 +110,37 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
     }
 
     /**
+     * @covers ::logLeague
+     */
+    public function testAllGeneratedSportsTeamsAreNotNHLTeams(): void
+    {
+        for ($i = 0; $i < 100; $i++) {
+            $team = $this->phodam->create(SportsTeam::class);
+//            var_export($team);
+            $this->assertNotEquals('NHL', $team->getLeague());
+        }
+    }
+
+    /**
+     * @covers ::logLeague
+     */
+    public function testAllGeneratedSportsTeamsCanHaveValuesOverridden(): void
+    {
+        // the English Premier League was founded in 1992
+        // Association Football (USA: Soccer)
+        $overrides = [
+            'league' => 'EPL',
+            'founded' => rand(1992, $this->thisYear)
+        ];
+        for ($i = 0; $i < 100; $i++) {
+            $team = $this->phodam->create(SportsTeam::class, null, $overrides);
+//            var_export($team);
+            $this->assertEquals('EPL', $team->getLeague());
+            $this->assertGreaterThanOrEqual(1992, $team->getFounded());
+        }
+    }
+
+    /**
      * @covers ::logFounded
      */
     public function testAllGeneratedHockeyTeamsWithOverrides(): void
@@ -126,7 +155,7 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
 
             $this->assertEquals('NHL', $team->getLeague());
             $this->assertGreaterThanOrEqual(1920, $team->getFounded());
-            $this->assertLessThanOrEqual((int) date('Y'), $team->getFounded());
+            $this->assertLessThanOrEqual($this->thisYear, $team->getFounded());
         }
     }
 }
