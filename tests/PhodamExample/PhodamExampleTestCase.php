@@ -7,6 +7,7 @@ namespace PhodamExampleTests;
 use Phodam\Phodam;
 use Phodam\Provider\TypeProviderConfig;
 use PhodamExample\SportsTeam;
+use PhodamExampleTests\TestClasses\CreateReportArrayProvider;
 use PhodamExampleTests\TestClasses\HockeyTeamFoundingYearProvider;
 use PhodamExampleTests\TestClasses\HockeyTeamProvider;
 use PhodamExampleTests\TestClasses\SportsTeamProvider;
@@ -31,7 +32,6 @@ class PhodamExampleTestCase extends TestCase
             (new TypeProviderConfig($sportsTeamYearProvider))
                 ->forInt()
                 ->withName('FoundingYear');
-
         $this->phodam->registerTypeProviderConfig($sportsTeamYearProviderConfig);
 
         // register a SportsTeam::class provider named 'Hockey'
@@ -41,7 +41,6 @@ class PhodamExampleTestCase extends TestCase
             (new TypeProviderConfig($hockeyTeamProvider))
                 ->forClass(SportsTeam::class)
                 ->withName('Hockey');
-
         $this->phodam->registerTypeProviderConfig($hockeyTeamProviderConfig);
 
         // register a SportsTeam::class provider without a name
@@ -50,7 +49,6 @@ class PhodamExampleTestCase extends TestCase
         $sportsTeamProviderConfig =
             (new TypeProviderConfig($sportsTeamProvider))
                 ->forClass(SportsTeam::class);
-
         $this->phodam->registerTypeProviderConfig($sportsTeamProviderConfig);
 
         // register a String provider with the name 'uuid'
@@ -59,7 +57,6 @@ class PhodamExampleTestCase extends TestCase
         $uuidStringProviderConfig = (new TypeProviderConfig($uuidStringProvider))
             ->forString()
             ->withName('uuid');
-
         $this->phodam->registerTypeProviderConfig($uuidStringProviderConfig);
 
         // register a String provider without a name
@@ -67,7 +64,15 @@ class PhodamExampleTestCase extends TestCase
         $stringProvider = new StringProvider();
         $stringProviderConfig = (new TypeProviderConfig($stringProvider))
             ->forString();
-
         $this->phodam->registerTypeProviderConfig($stringProviderConfig);
+
+        // register an Array provider with the name 'CreateReport'
+        // Usage: $this->phodam->createArray('CreateReport')
+        $createReportArrayProvider = new CreateReportArrayProvider();
+        $createReportArrayProviderConfig =
+            (new TypeProviderConfig($createReportArrayProvider))
+                ->forArray()
+                ->withName('CreateReport');
+        $this->phodam->registerTypeProviderConfig($createReportArrayProviderConfig);
     }
 }
