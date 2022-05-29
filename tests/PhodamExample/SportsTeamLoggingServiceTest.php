@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PhodamExample\Tests\PhodamExample;
+namespace PhodamExampleTests;
 
+use Phodam\Provider\TypeProviderConfig;
 use PhodamExample\SportsTeam;
 use PhodamExample\SportsTeamLoggingService;
+use PhodamExampleTests\TestClasses\HockeyTeamProvider;
+use PhodamExampleTests\TestClasses\SportsTeamYearTypeProvider;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -22,6 +25,23 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
 
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->service = new SportsTeamLoggingService($this->logger);
+
+
+        $sportsTeamYearProvider = new SportsTeamYearTypeProvider();
+        $sportsTeamYearProviderConfig =
+            (new TypeProviderConfig($sportsTeamYearProvider))
+                ->forInt()
+                ->withName('FoundingYear');
+
+        $this->phodam->registerTypeProviderConfig($sportsTeamYearProviderConfig);
+
+        $hockeyTeamProvider = new HockeyTeamProvider();
+        $hockeyTeamProviderConfig =
+            (new TypeProviderConfig($hockeyTeamProvider))
+                ->forClass(SportsTeam::class)
+                ->withName('Hockey');
+
+        $this->phodam->registerTypeProviderConfig($hockeyTeamProviderConfig);
     }
 
     /**

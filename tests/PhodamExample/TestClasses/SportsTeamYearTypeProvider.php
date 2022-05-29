@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhodamExample\Tests\PhodamExample\Phodam;
+namespace PhodamExampleTests\TestClasses;
 
 use Phodam\Provider\TypeProviderInterface;
 
