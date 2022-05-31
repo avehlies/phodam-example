@@ -151,7 +151,7 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
     public function testAllGeneratedHockeyTeamsWithOverrides(): void
     {
         for ($i = 0; $i < 100; $i++) {
-            $year = $this->phodam->createInt('FoundingYear');
+            $year = $this->phodam->create('int', 'FoundingYear');
             $overrides = [
                 'founded' => $year
             ];

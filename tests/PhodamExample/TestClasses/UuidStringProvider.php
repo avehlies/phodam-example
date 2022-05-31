@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace PhodamExampleTests\TestClasses;
 
-use Phodam\Provider\TypeProviderInterface;
+use Phodam\Provider\ProviderInterface;
 
 /**
  * A very rudimentary UUID String Provider only to be used for unit tests
  */
-class UuidStringProvider implements TypeProviderInterface
+class UuidStringProvider implements ProviderInterface
 {
-    public function create(array $overrides = [])
+    public function create(array $overrides = [], array $config = []): string
     {
         $bytes = bin2hex(random_bytes(32));
         $uuid = vsprintf("%s%s-%s-%s-%s-%s%s%s%s", str_split($bytes, 4));

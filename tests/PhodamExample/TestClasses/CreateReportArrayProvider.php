@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace PhodamExampleTests\TestClasses;
 
-use Phodam\Provider\TypeProviderInterface;
+use Phodam\Provider\ProviderInterface;
 
-class CreateReportArrayProvider implements TypeProviderInterface
+class CreateReportArrayProvider implements ProviderInterface
 {
-    public function create(array $overrides = []): array
+    public function create(array $overrides = [], array $config = []): array
     {
         $defaults = [
             'name' => $this->randomString(),

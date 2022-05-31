@@ -26,7 +26,7 @@ class UuidStringProviderTest extends PhodamExampleTestCase
     {
         $uuids = [];
         for ($i = 0; $i < 50; $i++) {
-            $uuid = $this->phodam->createString('uuid');
+            $uuid = $this->phodam->create('string', 'uuid');
             $uuids[] = $uuid;
 //            var_export($uuid);
         }

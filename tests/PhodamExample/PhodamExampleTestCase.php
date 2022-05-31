@@ -10,13 +10,12 @@ declare(strict_types=1);
 namespace PhodamExampleTests;
 
 use Phodam\Phodam;
-use Phodam\Provider\TypeProviderConfig;
+use Phodam\Provider\ProviderConfig;
 use PhodamExample\SportsTeam;
 use PhodamExampleTests\TestClasses\CreateReportArrayProvider;
 use PhodamExampleTests\TestClasses\HockeyTeamFoundingYearProvider;
 use PhodamExampleTests\TestClasses\HockeyTeamProvider;
 use PhodamExampleTests\TestClasses\SportsTeamProvider;
-use PhodamExampleTests\TestClasses\StringProvider;
 use PhodamExampleTests\TestClasses\UuidStringProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -31,53 +30,46 @@ class PhodamExampleTestCase extends TestCase
         $this->phodam = new Phodam();
 
         // register an Int provider named 'FoundingYear'
-        // Usage: $this->phodam->createInt('FoundingYear')
+        // Usage: $this->phodam->create('int', 'FoundingYear')
         $sportsTeamYearProvider = new HockeyTeamFoundingYearProvider();
         $sportsTeamYearProviderConfig =
-            (new TypeProviderConfig($sportsTeamYearProvider))
-                ->forInt()
+            (new ProviderConfig($sportsTeamYearProvider))
+                ->forType('int')
                 ->withName('FoundingYear');
-        $this->phodam->registerTypeProviderConfig($sportsTeamYearProviderConfig);
+        $this->phodam->registerProviderConfig($sportsTeamYearProviderConfig);
 
         // register a SportsTeam::class provider named 'Hockey'
         // Usage: $this->phodam->create(SportsTeam::class, 'Hockey')
         $hockeyTeamProvider = new HockeyTeamProvider();
         $hockeyTeamProviderConfig =
-            (new TypeProviderConfig($hockeyTeamProvider))
-                ->forClass(SportsTeam::class)
+            (new ProviderConfig($hockeyTeamProvider))
+                ->forType(SportsTeam::class)
                 ->withName('Hockey');
-        $this->phodam->registerTypeProviderConfig($hockeyTeamProviderConfig);
+        $this->phodam->registerProviderConfig($hockeyTeamProviderConfig);
 
         // register a SportsTeam::class provider without a name
         // Usage: $this->phodam->create(SportsTeam::class)
         $sportsTeamProvider = new SportsTeamProvider();
         $sportsTeamProviderConfig =
-            (new TypeProviderConfig($sportsTeamProvider))
-                ->forClass(SportsTeam::class);
-        $this->phodam->registerTypeProviderConfig($sportsTeamProviderConfig);
+            (new ProviderConfig($sportsTeamProvider))
+                ->forType(SportsTeam::class);
+        $this->phodam->registerProviderConfig($sportsTeamProviderConfig);
 
         // register a String provider with the name 'uuid'
         // Usage: $this->phodam->createString('uuid')
         $uuidStringProvider = new UuidStringProvider();
-        $uuidStringProviderConfig = (new TypeProviderConfig($uuidStringProvider))
-            ->forString()
+        $uuidStringProviderConfig = (new ProviderConfig($uuidStringProvider))
+            ->forType('string')
             ->withName('uuid');
-        $this->phodam->registerTypeProviderConfig($uuidStringProviderConfig);
-
-        // register a String provider without a name
-        // Usage: $this->phodam->createString()
-        $stringProvider = new StringProvider();
-        $stringProviderConfig = (new TypeProviderConfig($stringProvider))
-            ->forString();
-        $this->phodam->registerTypeProviderConfig($stringProviderConfig);
+        $this->phodam->registerProviderConfig($uuidStringProviderConfig);
 
         // register an Array provider with the name 'CreateReport'
         // Usage: $this->phodam->createArray('CreateReport')
         $createReportArrayProvider = new CreateReportArrayProvider();
         $createReportArrayProviderConfig =
-            (new TypeProviderConfig($createReportArrayProvider))
+            (new ProviderConfig($createReportArrayProvider))
                 ->forArray()
                 ->withName('CreateReport');
-        $this->phodam->registerTypeProviderConfig($createReportArrayProviderConfig);
+        $this->phodam->registerProviderConfig($createReportArrayProviderConfig);
     }
 }

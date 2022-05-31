@@ -9,16 +9,16 @@
     "packages-dev": [
         {
             "name": "avehlies/phodam",
-            "version": "v0.1.4",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/avehlies/phodam.git",
-                "reference": "57bc84e673733a1355a5e47380534cd1e7733bb7"
+                "reference": "4a5e6dae136129a727c3d242f60058931e765455"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avehlies/phodam/zipball/57bc84e673733a1355a5e47380534cd1e7733bb7",
-                "reference": "57bc84e673733a1355a5e47380534cd1e7733bb7",
+                "url": "https://api.github.com/repos/avehlies/phodam/zipball/4a5e6dae136129a727c3d242f60058931e765455",
+                "reference": "4a5e6dae136129a727c3d242f60058931e765455",
                 "shasum": ""
             },
             "require-dev": {
@@ -53,9 +53,9 @@
             ],
             "support": {
                 "issues": "https://github.com/avehlies/phodam/issues",
-                "source": "https://github.com/avehlies/phodam/tree/v0.1.4"
+                "source": "https://github.com/avehlies/phodam/tree/v0.2.0"
             },
-            "time": "2022-05-28T22:20:19+00:00"
+            "time": "2022-05-31T11:23:11+00:00"
         },
         {
             "name": "composer/pcre",
@@ -1108,12 +1108,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d90266da6bf2f1a21bd50fdb120245190a8522a3"
+                "reference": "d953cd859ddc7af6c6f3c6b485e4302ce93f8ecd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d90266da6bf2f1a21bd50fdb120245190a8522a3",
-                "reference": "d90266da6bf2f1a21bd50fdb120245190a8522a3",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d953cd859ddc7af6c6f3c6b485e4302ce93f8ecd",
+                "reference": "d953cd859ddc7af6c6f3c6b485e4302ce93f8ecd",
                 "shasum": ""
             },
             "require": {
@@ -1160,7 +1160,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-05-28T17:27:36+00:00"
+            "time": "2022-05-31T00:20:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

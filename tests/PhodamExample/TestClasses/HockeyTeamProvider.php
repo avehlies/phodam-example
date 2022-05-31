@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace PhodamExampleTests\TestClasses;
 
-use Phodam\Provider\TypeProviderInterface;
+use Phodam\Provider\ProviderInterface;
 use PhodamExample\SportsTeam;
 
-class HockeyTeamProvider implements TypeProviderInterface
+class HockeyTeamProvider implements ProviderInterface
 {
-    public function create(array $overrides = [])
+    public function create(array $overrides = [], array $config = []): SportsTeam
     {
         $defaults = [
             'location' => $this->randomString(),
