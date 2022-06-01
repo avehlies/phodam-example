@@ -9,14 +9,18 @@ declare(strict_types=1);
 
 namespace PhodamExampleTests\TestClasses;
 
+use Phodam\PhodamAware;
+use Phodam\PhodamAwareTrait;
 use Phodam\Provider\ProviderInterface;
 
-class CreateReportArrayProvider implements ProviderInterface
+class CreateReportArrayProvider implements ProviderInterface, PhodamAware
 {
+    use PhodamAwareTrait;
+
     public function create(array $overrides = [], array $config = []): array
     {
         $defaults = [
-            'name' => $this->randomString(),
+            'name' => $this->phodam->create('string'),
             'userId' => 1,
             'type' => 'CustomerReport',
             'scheduled' => 'daily',
@@ -34,10 +38,4 @@ class CreateReportArrayProvider implements ProviderInterface
             $overrides
         );
     }
-
-    private function randomString(): string
-    {
-        return substr(md5((string) rand(0, 10000)), 0, 10);
-    }
-
 }

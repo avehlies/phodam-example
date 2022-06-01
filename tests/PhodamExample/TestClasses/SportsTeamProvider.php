@@ -9,17 +9,21 @@ declare(strict_types=1);
 
 namespace PhodamExampleTests\TestClasses;
 
+use Phodam\PhodamAware;
+use Phodam\PhodamAwareTrait;
 use Phodam\Provider\ProviderInterface;
 use PhodamExample\SportsTeam;
 
-class SportsTeamProvider implements ProviderInterface
+class SportsTeamProvider implements ProviderInterface, PhodamAware
 {
+    use PhodamAwareTrait;
+
     public function create(array $overrides = [], array $config = []): SportsTeam
     {
         $defaults = [
-            'location' => $this->randomString(),
-            'name' => $this->randomString(),
-            'league' => $this->randomLeague(),
+            'location' => $this->phodam->create('string'),
+            'name' => $this->phodam->create('string'),
+            'league' => strtoupper(substr($this->phodam->create('string'), 0, 4)),
             'founded' => mt_rand(1800, (int) date('Y'))
         ];
         $values = array_merge(
@@ -34,15 +38,4 @@ class SportsTeamProvider implements ProviderInterface
             $values['founded']
         );
     }
-
-    private function randomString(int $length = 10): string
-    {
-        return substr(md5((string) rand(0, 10000)), 0, $length);
-    }
-
-    private function randomLeague(): string
-    {
-        return strtoupper($this->randomString(4));
-    }
-
 }

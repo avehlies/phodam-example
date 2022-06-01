@@ -131,8 +131,6 @@ class SportsTeamLoggingServiceTest extends PhodamExampleTestCase
      */
     public function testAllGeneratedSportsTeamsCanHaveValuesOverridden(): void
     {
-        // the English Premier League was founded in 1992
-        // Association Football (USA: Soccer)
         $overrides = [
             'league' => 'EPL',
             'founded' => rand(1992, $this->thisYear)
